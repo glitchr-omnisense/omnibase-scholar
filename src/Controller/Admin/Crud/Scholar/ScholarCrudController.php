@@ -64,7 +64,7 @@ class ScholarCrudController extends AbstractCrudController
         yield TextareaField::new('profilesText', '@scholar.admin.scholar.profiles')->setRequired(false)->hideOnIndex()->setHelp('@scholar.admin.scholar.profiles_help');
         yield TextareaField::new('sameAsText', '@scholar.admin.scholar.same_as')->setRequired(false)->hideOnIndex()->setHelp('@scholar.admin.scholar.same_as_help');
         yield TextField::new('keywordsText', '@scholar.admin.scholar.keywords')->setRequired(false)->hideOnIndex()->setHelp('@scholar.admin.scholar.keywords_help');
-        yield ImageField::new('portrait', '@scholar.admin.scholar.portrait')->setColumns(6)->hideOnIndex();
+        yield ImageField::new('portrait', '@scholar.admin.scholar.portrait')->setRequired(false)->setColumns(6)->hideOnIndex();
         yield TextareaField::new('biography', '@scholar.admin.scholar.biography')->setNumOfRows(14)->setRequired(false)->hideOnIndex()->setHelp('@scholar.admin.scholar.biography_help');
         yield BooleanField::new('autoApprove', '@scholar.admin.scholar.auto_approve')->setColumns(6)->setHelp('@scholar.admin.scholar.auto_approve_help');
     }

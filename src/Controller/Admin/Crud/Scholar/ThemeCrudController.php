@@ -36,10 +36,10 @@ class ThemeCrudController extends AbstractCrudController
         yield IdField::new('id')->onlyOnIndex();
         yield SelectField::new('kind', '@scholar.admin.theme.kind')->setColumns(3); // the enum's cases, each naming itself
         yield TextField::new('title', '@scholar.admin.theme.title')->setColumns(9);
-        yield SlugField::new('slug')->setColumns(6)->hideOnIndex();
+        yield SlugField::new('slug')->setTargetFieldName('title')->setColumns(6)->hideOnIndex();
         yield TextareaField::new('summary', '@scholar.admin.theme.summary')->setRequired(false)->hideOnIndex();
         yield TextareaField::new('description', '@scholar.admin.theme.description')->setNumOfRows(12)->setRequired(false)->hideOnIndex();
-        yield ImageField::new('image', '@scholar.admin.theme.image')->setColumns(6)->hideOnIndex();
+        yield ImageField::new('image', '@scholar.admin.theme.image')->setRequired(false)->setColumns(6)->hideOnIndex();
         yield IntegerField::new('startYear', '@scholar.admin.theme.start_year')->setColumns(2)->setRequired(false)->hideOnIndex();
         yield IntegerField::new('endYear', '@scholar.admin.theme.end_year')->setColumns(2)->setRequired(false)->hideOnIndex();
         yield TextField::new('funder', '@scholar.admin.theme.funder')->setColumns(4)->setRequired(false)->hideOnIndex();

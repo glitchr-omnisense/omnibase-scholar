@@ -79,7 +79,7 @@ class PublicationCrudController extends AbstractCrudController
 
         yield IdField::new('id')->onlyOnIndex();
         yield SelectField::new('status', '@scholar.admin.publication.status')->setColumns(3); // the enum's cases, each naming itself
-        yield IntegerField::new('year', '@scholar.admin.publication.year')->setColumns(2)->setDisabled(!$manual);
+        yield IntegerField::new('year', '@scholar.admin.publication.year')->setRequired(false)->setColumns(2)->setDisabled(!$manual);
         yield SelectField::new('type', '@scholar.admin.publication.type')->setChoices($types)->setColumns(3)->setDisabled(!$manual);
         yield TextField::new('title', '@scholar.admin.publication.title')->setColumns(12)->setDisabled(!$manual);
         yield TextField::new('authors', '@scholar.admin.publication.authors')->setColumns(12)->hideOnIndex()->setRequired(false)->setDisabled(!$manual)->setHelp('@scholar.admin.publication.authors_help');
@@ -91,11 +91,11 @@ class PublicationCrudController extends AbstractCrudController
         yield BooleanField::new('pinned', '@scholar.admin.publication.pinned')->setColumns(3)->hideOnIndex();
         yield BooleanField::new('selected', '@scholar.admin.publication.selected')->setColumns(3);
         yield AssociationField::new('themes', '@scholar.admin.publication.themes')->setColumns(12)->hideOnIndex()->setRequired(false);
-        yield FileField::new('pdf', '@scholar.admin.publication.pdf')->setColumns(6)->hideOnIndex()->setHelp('@scholar.admin.publication.pdf_help');
+        yield FileField::new('pdf', '@scholar.admin.publication.pdf')->setRequired(false)->setColumns(6)->hideOnIndex()->setHelp('@scholar.admin.publication.pdf_help');
         yield TextField::new('pdfUrl', '@scholar.admin.publication.pdf_url')->setColumns(6)->hideOnIndex()->setRequired(false);
         yield TextField::new('publisherUrl', '@scholar.admin.publication.publisher_url')->setColumns(6)->hideOnIndex()->setRequired(false);
         yield TextField::new('buyUrl', '@scholar.admin.publication.buy_url')->setColumns(6)->hideOnIndex()->setRequired(false);
-        yield ImageField::new('cover', '@scholar.admin.publication.cover')->setColumns(6)->hideOnIndex()->setHelp('@scholar.admin.publication.cover_help');
+        yield ImageField::new('cover', '@scholar.admin.publication.cover')->setRequired(false)->setColumns(6)->hideOnIndex()->setHelp('@scholar.admin.publication.cover_help');
         yield TextareaField::new('note', '@scholar.admin.publication.note')->hideOnIndex()->setRequired(false)->setHelp('@scholar.admin.publication.note_help');
     }
 
