@@ -1,8 +1,8 @@
 # Scholar
 
-A researcher's site for [omnibase](https://github.com/glitchr-studio/omnibase):
+A researcher's site for [omnibase](https://github.com/glitchr-omnisense/omnibase):
 their publications read from the services that know them, through
-[glitchr/omnischolar](https://github.com/glitchr-studio/omnischolar)
+[glitchr/omnischolar](https://github.com/glitchr-omnisense/omnischolar)
 (OpenAlex, HAL, Crossref, ORCID, Open Library, arXiv, INSPIRE), validated
 before they show, with what the site adds to each - hidden, pinned, in the
 selection, a PDF, a link to buy it or to the publisher, a cover, a note,
@@ -11,9 +11,9 @@ grants, courses, supervisions); research themes and projects; the pages and
 their schema.org JSON-LD.
 
 The bundle holds no talk and no service: a scholar's talks are
-[omnibase/agenda](https://github.com/glitchr-studio/omnibase-agenda) `Event`s
+[omnibase/agenda](https://github.com/glitchr-omnisense/omnibase-agenda) `Event`s
 (`agenda.jsonld_type: EducationEvent`), their services
-[omnibase/consulting](https://github.com/glitchr-studio/omnibase-consulting)
+[omnibase/consulting](https://github.com/glitchr-omnisense/omnibase-consulting)
 `Offering`s.
 
 ```bash

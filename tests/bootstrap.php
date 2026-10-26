@@ -38,10 +38,10 @@ foreach ([
             array_push($required, ...array_keys(($composer($sibling)['require'] ?? []) + ($composer($sibling)['suggest'] ?? [])));
         }
 
-        // omniscient/omnischolar where the host has its files in vendor/ without having installed it
+        // omnisense/omnischolar where the host has its files in vendor/ without having installed it
         // (the omnibase harness mounts its checkout there: compose.checkouts.yml).
-        $omnischolar = getcwd().'/vendor/omniscient/omnischolar';
-        if ($loader instanceof \Composer\Autoload\ClassLoader && !\Composer\InstalledVersions::isInstalled('omniscient/omnischolar') && is_file($omnischolar.'/composer.json')) {
+        $omnischolar = getcwd().'/vendor/omnisense/omnischolar';
+        if ($loader instanceof \Composer\Autoload\ClassLoader && !\Composer\InstalledVersions::isInstalled('omnisense/omnischolar') && is_file($omnischolar.'/composer.json')) {
             foreach ($composer($omnischolar)['autoload']['psr-4'] ?? [] as $namespace => $path) {
                 $loader->addPsr4($namespace, $omnischolar.'/'.$path);
             }
