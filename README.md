@@ -35,11 +35,15 @@ Pages: `/publications` (filters; BibTeX, RIS, CSL-JSON of what is listed),
 
 ## Documentation
 
+- [Overview](docs/index.md)
 - [Installation and configuration](docs/installation.md)
+- [Concepts](docs/concepts.md)
 - [Synchronisation and validation](docs/sync.md)
 - [Pages, Twig functions and the host's look](docs/pages.md)
 - [The back office](docs/admin.md)
 - [Structured data and exports](docs/structured-data.md)
+- [Configuration reference](docs/configuration.md)
+- [Testing](docs/testing.md)
 
 ## Tests
 

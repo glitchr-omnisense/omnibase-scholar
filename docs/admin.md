@@ -1,3 +1,8 @@
+---
+title: "The back office (omnibase/admin)"
+order: 36
+---
+
 # The back office (omnibase/admin)
 
 CRUD screens, under `/admin/scholars/...`:

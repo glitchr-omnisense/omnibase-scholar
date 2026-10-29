@@ -1,3 +1,8 @@
+---
+title: "Synchronisation and validation"
+order: 30
+---
+
 # Synchronisation and validation
 
 `bin/console scholar:sync` (`--scholar=<id>` for one) reads, for every

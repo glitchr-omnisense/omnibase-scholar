@@ -1,7 +1,12 @@
+---
+title: "Installation and configuration"
+order: 10
+---
+
 # Installation and configuration
 
 ```bash
-composer require omnibase/scholar:dev-main glitchr/omnischolar omnischolar/openalex omnischolar/hal omnischolar/crossref omnischolar/orcid
+composer require omnibase/scholar:dev-main omnisense/omnischolar omnischolar/openalex omnischolar/hal omnischolar/crossref omnischolar/orcid
 ```
 
 ```php
@@ -18,7 +23,7 @@ scholar_controller:
     prefix: /
 ```
 
-## The sources (glitchr/omnischolar)
+## The sources (omnisense/omnischolar)
 
 The names a scholar's profiles use are the configured sources:
 
@@ -74,7 +79,7 @@ $scholar = (new Scholar('Keitaro Nakatani'))
 
 A profile names a configured source and one or several authors there: an
 OpenAlex id, an ORCID, an idHAL, a name - what that source's `works()` reads
-(glitchr/omnischolar's `docs/sources.md`).
+(omnisense/omnischolar's `docs/sources.md`).
 
 ## The cron container
 
@@ -83,3 +88,17 @@ OpenAlex id, an ORCID, an idHAL, a name - what that source's `works()` reads
 ```
 
 No Symfony Scheduler: the sites' cron container runs it.
+
+## Requirements
+
+- PHP 8.2 or later;
+- doctrine/orm 2.15 or 3;
+- omnisense/omnibase 3.0 or 4.0, omnibridge/symfony 1.x, omnibase/admin;
+- omnisense/omnischolar 1.x, and the sources the site reads (suggested:
+  omnischolar/openalex, omnischolar/hal, omnischolar/crossref,
+  omnischolar/orcid, omnischolar/openlibrary);
+- Symfony 6.4, 7 or 8 (config, console, dependency-injection, http-kernel,
+  string).
+
+Suggested as well: omnibase/agenda, for a scholar's talks and lectures as
+agenda events.

@@ -1,3 +1,8 @@
+---
+title: "Pages, Twig functions and the host's look"
+order: 31
+---
+
 # Pages, Twig functions and the host's look
 
 | Route | Path | |
