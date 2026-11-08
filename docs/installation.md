@@ -93,7 +93,7 @@ No Symfony Scheduler: the sites' cron container runs it.
 
 - PHP 8.2 or later;
 - doctrine/orm 2.15 or 3;
-- omnisense/omnibase 3.0 or 4.0, omnibridge/symfony 1.x, omnibase/admin;
+- omnisense/omnibase 3.0, 4.0 or 5.0, omnibridge/symfony 1.x, omnibase/admin;
 - omnisense/omnischolar 1.x, and the sources the site reads (suggested:
   omnischolar/openalex, omnischolar/hal, omnischolar/crossref,
   omnischolar/orcid, omnischolar/openlibrary);
