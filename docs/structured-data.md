@@ -28,14 +28,14 @@ use Base\Scholar\Entity\Publication;
 use Base\Scholar\Entity\Scholar;
 use Base\Scholar\Service\Citations;
 
-$scholar = (new Scholar('Keitaro Nakatani'))->setOrcid('0009-0005-1387-7295');
+$scholar = (new Scholar('Josiah Carberry'))->setOrcid('0000-0002-1825-0097');
 $publication = (new Publication($scholar))
-    ->setTitle('Acid-sensitive photoswitches')
+    ->setTitle('Acid-sensitive pot glazes')
     ->setType('article')
     ->setYear(2024)
-    ->setVenue('Chemical Science')
-    ->setAuthors('Lucas Chocron, Keitaro Nakatani')
-    ->setDoi('10.1039/d4sc04973j');
+    ->setVenue('Journal of Psychoceramics')
+    ->setAuthors('Jeanne Exemple, Josiah Carberry')
+    ->setDoi('10.5555/12345678');
 
 $citations = new Citations();
 echo $citations->reference($publication), "\n\n";
@@ -47,25 +47,25 @@ Its output, run in omnisense/omnibase-harness with omnisense/omnischolar on
 the autoloader:
 
 ```text
-Chocron, L., Nakatani, K. (2024). Acid-sensitive photoswitches. Chemical Science. https://doi.org/10.1039/d4sc04973j
+Exemple, J., Carberry, J. (2024). Acid-sensitive pot glazes. Journal of Psychoceramics. https://doi.org/10.5555/12345678
 
-@article{chocron2024acid,
-  author = {Chocron, Lucas and Nakatani, Keitaro},
-  title = {{Acid-sensitive photoswitches}},
-  journal = {Chemical Science},
+@article{exemple2024acid,
+  author = {Exemple, Jeanne and Carberry, Josiah},
+  title = {{Acid-sensitive pot glazes}},
+  journal = {Journal of Psychoceramics},
   year = {2024},
-  doi = {10.1039/d4sc04973j}
+  doi = {10.5555/12345678}
 }
 
 TY  - JOUR
-ID  - chocron2024acid
-AU  - Chocron, Lucas
-AU  - Nakatani, Keitaro
-TI  - Acid-sensitive photoswitches
-T2  - Chemical Science
+ID  - exemple2024acid
+AU  - Exemple, Jeanne
+AU  - Carberry, Josiah
+TI  - Acid-sensitive pot glazes
+T2  - Journal of Psychoceramics
 PY  - 2024
-DO  - 10.1039/d4sc04973j
-UR  - https://doi.org/10.1039/d4sc04973j
+DO  - 10.5555/12345678
+UR  - https://doi.org/10.5555/12345678
 ER  -
 ```
 

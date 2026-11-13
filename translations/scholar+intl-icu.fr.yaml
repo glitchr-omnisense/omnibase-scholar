@@ -108,7 +108,7 @@ admin:
     from_year: "Depuis"
     from_year_help: "Les travaux antérieurs ne sont pas lus (un homonyme…)."
     profiles: "Sources des publications"
-    profiles_help: "Une ligne par source : « openalex: A5108007452 », « hal: Prénom Nom » ou l'idHAL, « crossref: Prénom Nom », « openlibrary: Prénom Nom ». Les noms sont ceux d'omnischolar.sources."
+    profiles_help: "Une ligne par source : « openalex: A5000000001 », « hal: Prénom Nom » ou l'idHAL, « crossref: Prénom Nom », « openlibrary: Prénom Nom ». Les noms sont ceux d'omnischolar.sources."
     same_as: "Pages ailleurs"
     same_as_help: "Une adresse par ligne : page du laboratoire, Wikipédia, Google Scholar…"
     keywords: "Centres d'intérêt"

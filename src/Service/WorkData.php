@@ -118,8 +118,8 @@ final class WorkData
     }
 
     /**
-     * What names the work for good: its identifiers ("doi:10.1039/d4sc04973j",
-     * "hal:hal-04772417", "isbn:9781412996600"...), its editions' included.
+     * What names the work for good: its identifiers ("doi:10.5555/12345678",
+     * "hal:hal-00000001", "isbn:9780000000019"...), its editions' included.
      *
      * @return list<string>
      */
@@ -139,7 +139,7 @@ final class WorkData
         return Merger::fingerprint(Merger::mainTitle($work)).'|'.($work->year ?? '');
     }
 
-    /** "Chocron, L.; Nakatani, K. et al.": the authors as a list prints them. */
+    /** "Exemple, J.; Carberry, J. et al.": the authors as a list prints them. */
     public static function authorsLine(Work $work, int $max = 8): string
     {
         $names = array_map(static fn (Contributor $c) => $c->name, $work->authorsOnly() ?: $work->authors);

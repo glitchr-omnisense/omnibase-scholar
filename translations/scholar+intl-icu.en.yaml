@@ -108,7 +108,7 @@ admin:
     from_year: "Since"
     from_year_help: "Earlier works are not read (a namesake…)."
     profiles: "Where the works are read"
-    profiles_help: "One source a line: \"openalex: A5108007452\", \"hal: Given Family\" or the idHAL, \"crossref: Given Family\", \"openlibrary: Given Family\". The names are omnischolar.sources'."
+    profiles_help: "One source a line: \"openalex: A5000000001\", \"hal: Given Family\" or the idHAL, \"crossref: Given Family\", \"openlibrary: Given Family\". The names are omnischolar.sources'."
     same_as: "Pages elsewhere"
     same_as_help: "One address a line: the lab's page, Wikipedia, Google Scholar…"
     keywords: "Research interests"

@@ -25,7 +25,7 @@ final class Citations
         $this->export = new Export($abstracts);
     }
 
-    /** "Chocron, L., Nakatani, K. et al. (2024). Acid-sensitive photoswitches. Chemical Science, 15(41), 17060–17071. https://doi.org/10.1039/d4sc04973j" */
+    /** "Exemple, J., Carberry, J. et al. (2024). Acid-sensitive pot glazes. Journal of Psychoceramics, 15(41), 17060–17071. https://doi.org/10.5555/12345678" */
     public function reference(Publication $publication): string
     {
         $work = $publication->toWork();

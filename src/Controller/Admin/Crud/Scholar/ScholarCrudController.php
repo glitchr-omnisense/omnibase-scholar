@@ -22,7 +22,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 /**
  * Who the site is about: the name and the title, the affiliation, the
  * identifiers, where the works are read from (one "source: author" a
- * line - "openalex: A5108007452", "hal: Keitaro Nakatani"), the pages that
+ * line - "openalex: A5000000001", "hal: Josiah Carberry"), the pages that
  * are theirs elsewhere, the portrait and the biography. "Sync now" reads
  * the sources at once, as the weekly scholar:sync does.
  */

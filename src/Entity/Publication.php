@@ -412,7 +412,7 @@ class Publication
     public function addTheme(Theme $theme): self { if (!$this->themes->contains($theme)) { $this->themes->add($theme); } return $this; }
     public function removeTheme(Theme $theme): self { $this->themes->removeElement($theme); return $this; }
 
-    /** The page's address piece: "acid-sensitive-photoswitches". */
+    /** The page's address piece: "acid-sensitive-pot-glazes". */
     public function getSlug(): string
     {
         return (new AsciiSlugger())->slug((string) $this->title)->lower()->truncate(80, '', false)->trim('-')->toString() ?: 'publication';

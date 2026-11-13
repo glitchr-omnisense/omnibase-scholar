@@ -5,7 +5,7 @@ namespace Base\Scholar\Entity\Cv;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * A position held: "Professeur des universités" at "ENS Paris-Saclay", since 2015 - the title,
+ * A position held: "Professeur des universités" at "Brown University", since 2015 - the title,
  * the organization, the department or the laboratory.
  */
 #[ORM\Entity]

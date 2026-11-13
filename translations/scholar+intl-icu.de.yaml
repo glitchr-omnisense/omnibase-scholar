@@ -108,7 +108,7 @@ admin:
     from_year: "Seit"
     from_year_help: "Ältere Werke werden nicht gelesen (ein Namensvetter…)."
     profiles: "Quellen der Publikationen"
-    profiles_help: "Eine Quelle pro Zeile: „openalex: A5108007452“, „hal: Vorname Nachname“ oder die idHAL, „crossref: Vorname Nachname“. Die Namen sind die von omnischolar.sources."
+    profiles_help: "Eine Quelle pro Zeile: „openalex: A5000000001“, „hal: Vorname Nachname“ oder die idHAL, „crossref: Vorname Nachname“. Die Namen sind die von omnischolar.sources."
     same_as: "Seiten anderswo"
     same_as_help: "Eine Adresse pro Zeile."
     keywords: "Forschungsinteressen"

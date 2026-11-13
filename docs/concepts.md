@@ -12,7 +12,7 @@ about. The pages and the Twig functions read the first one.
 
 | Field | Meaning |
 |---|---|
-| `name` (required), `givenName`, `familyName`, `honorific` | `getFullName()` is the honorific and the name: "Dr. Monica Neagoy" |
+| `name` (required), `givenName`, `familyName`, `honorific` | `getFullName()` is the honorific and the name: "Dr. Jeanne Exemple" |
 | `jobTitle`, `affiliation`, `affiliationUrl` | for the CV and schema.org |
 | `orcid` | `0000-0000-0000-000X` |
 | `profiles` | source name => the authors there (an OpenAlex id, an ORCID, an idHAL, a name); typed in the back office one `source: author` a line (`getProfilesText()`, `setProfilesText()`) |
@@ -25,7 +25,7 @@ about. The pages and the Twig functions read the first one.
 | `lastSyncAt`, `lastSync` | what the last run did (`rememberSync()`) |
 
 `getIdentityUrls()` gathers the `sameAs` pages, the ORCID page, the OpenAlex
-author pages (ids like `A5108007452`) and the HAL CVs (an idHAL, not a name).
+author pages (ids like `A5000000001`) and the HAL CVs (an idHAL, not a name).
 
 ## A publication
 

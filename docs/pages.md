@@ -39,7 +39,7 @@ place as a draft (`scholar-draft`, its tag *Draft*).
 | `scholar_latest(n, types)` | the latest shown |
 | `scholar_books(n)`, `scholar_count(types)`, `scholar_themes(kind)` | |
 | `scholar_cv(sections)` | `{positions: [...], degrees: [...]}` |
-| `scholar_reference(publication)` | "Chocron, L., Nakatani, K. (2024). …" |
+| `scholar_reference(publication)` | "Exemple, J., Carberry, J. (2024). …" |
 | `scholar_person_jsonld(url, image)` | the Person, for a home page |
 | `type\|scholar_type_label(count)` | "Article", "Articles" in the reader's language |
 

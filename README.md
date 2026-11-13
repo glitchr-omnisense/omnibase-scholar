@@ -2,7 +2,7 @@
 
 A researcher's site for [omnibase](https://github.com/glitchr-omnisense/omnibase):
 their publications read from the services that know them, through
-[glitchr/omnischolar](https://github.com/glitchr-omnisense/omnischolar)
+[omnisense/omnischolar](https://github.com/glitchr-omnisense/omnischolar)
 (OpenAlex, HAL, Crossref, ORCID, Open Library, arXiv, INSPIRE), validated
 before they show, with what the site adds to each - hidden, pinned, in the
 selection, a PDF, a link to buy it or to the publisher, a cover, a note,
@@ -17,12 +17,39 @@ The bundle holds no talk and no service: a scholar's talks are
 `Offering`s.
 
 ```bash
-composer require omnibase/scholar:dev-main glitchr/omnischolar omnischolar/openalex omnischolar/hal omnischolar/crossref
+composer require omnibase/scholar omnisense/omnischolar omnischolar/openalex omnischolar/hal omnischolar/crossref
 ```
+
+Stable releases follow semantic versioning: this installs the latest 1.x, with omnisense/omnibase 5.1 or later
+on Symfony (omnibridge/symfony) and Doctrine ORM (DoctrineBundle), omnibase/admin for the back office. No `minimum-stability` setting is needed.
+
+Under Symfony, register the bundles and the pages, then create the tables:
+
+```php
+// config/bundles.php
+Omnischolar\Bridge\Symfony\OmnischolarBundle::class => ['all' => true],
+Base\Scholar\ScholarBundle::class => ['all' => true],
+```
+
+```yaml
+# config/routes.yaml
+scholar_controller:
+    resource: "@ScholarBundle/src/Controller/Client"
+    type: attribute
+    prefix: /
+```
+
+```sh
+bin/console make:migration && bin/console doctrine:migrations:migrate
+```
+
+First use: create the scholar in the back office (*Identity and sources*: a name, an ORCID, an OpenAlex author id),
+run `bin/console scholar:sync`, validate the works it found, and open `/publications`. The public sources need no
+key; [docs/installation.md](docs/installation.md) has the rest.
 
 | | |
 |---|---|
-| `Entity\Scholar` | the person: name, title, affiliation, ORCID, the profiles works are read from (`openalex: A5108007452`, `hal: Keitaro Nakatani`), sameAs, portrait, biography |
+| `Entity\Scholar` | the person: name, title, affiliation, ORCID, the profiles works are read from (`openalex: A5000000001`, `hal: Josiah Carberry`), sameAs, portrait, biography |
 | `Entity\Publication` | a `Work` of omnischolar kept whole (JSON) + columns to sort by + the site's overrides; `pending`, `published` or `rejected` |
 | `Entity\Cv\*` | `Position`, `Degree`, `Award`, `Grant`, `Course`, `Supervision` |
 | `Entity\Theme` | a research theme or a project, a page each |

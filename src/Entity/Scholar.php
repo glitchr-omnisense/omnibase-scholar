@@ -44,7 +44,7 @@ class Scholar
     #[ORM\Column(length: 255, nullable: true)]
     protected ?string $jobTitle = null;
 
-    /** "ENS Paris-Saclay, PPSM (CNRS UMR 8531)". */
+    /** "Brown University, Department of Psychoceramics". */
     #[ORM\Column(length: 255, nullable: true)]
     protected ?string $affiliation = null;
 
@@ -124,7 +124,7 @@ class Scholar
     public function getHonorific(): ?string { return $this->honorific; }
     public function setHonorific(?string $honorific): self { $this->honorific = $honorific ?: null; return $this; }
 
-    /** "Dr. Monica Neagoy". */
+    /** "Dr. Jeanne Exemple". */
     public function getFullName(): string
     {
         return trim(($this->honorific ? $this->honorific.' ' : '').$this->name);

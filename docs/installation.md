@@ -6,7 +6,7 @@ order: 10
 # Installation and configuration
 
 ```bash
-composer require omnibase/scholar:dev-main omnisense/omnischolar omnischolar/openalex omnischolar/hal omnischolar/crossref omnischolar/orcid
+composer require omnibase/scholar omnisense/omnischolar omnischolar/openalex omnischolar/hal omnischolar/crossref omnischolar/orcid
 ```
 
 ```php
@@ -68,12 +68,12 @@ bin/console assets:install          # public/css/scholar.css
 In the back office (*Identity and sources*), or in the fixtures:
 
 ```php
-$scholar = (new Scholar('Keitaro Nakatani'))
-    ->setOrcid('0009-0005-1387-7295')
+$scholar = (new Scholar('Josiah Carberry'))
+    ->setOrcid('0000-0002-1825-0097')
     ->setProfiles([
-        'openalex' => ['A5108007452'],
-        'hal' => ['Keitaro Nakatani'],      // by the name he signs: by ORCID HAL finds only the deposits that carry it
-        'crossref' => ['Keitaro Nakatani'],
+        'openalex' => ['A5000000001'],
+        'hal' => ['Josiah Carberry'],      // by the name he signs: by ORCID HAL finds only the deposits that carry it
+        'crossref' => ['Josiah Carberry'],
     ]);
 ```
 
@@ -93,7 +93,7 @@ No Symfony Scheduler: the sites' cron container runs it.
 
 - PHP 8.2 or later;
 - doctrine/orm 2.15 or 3;
-- omnisense/omnibase 3.0, 4.0 or 5.0, omnibridge/symfony 1.x, omnibase/admin;
+- omnisense/omnibase 5.1 or later, omnibridge/symfony 1.1 or later, omnibase/admin 1.x;
 - omnisense/omnischolar 1.x, and the sources the site reads (suggested:
   omnischolar/openalex, omnischolar/hal, omnischolar/crossref,
   omnischolar/orcid, omnischolar/openlibrary);

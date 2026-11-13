@@ -36,7 +36,7 @@ final class SynchronizerTest extends TestCase
 
     private function scholar(): Scholar
     {
-        $scholar = new Scholar('Keitaro Nakatani');
+        $scholar = new Scholar('Josiah Carberry');
         (new \ReflectionProperty(Scholar::class, 'id'))->setValue($scholar, 1);
 
         return $scholar;
@@ -50,8 +50,8 @@ final class SynchronizerTest extends TestCase
         $this->assertCount(1, $this->stored);
         $this->assertSame(PublicationStatus::PENDING, $this->stored[0]->getStatus());
         $this->assertFalse($this->stored[0]->isShown());
-        $this->assertSame('10.1039/d4sc04973j', $this->stored[0]->getDoi());
-        $this->assertSame('Chemical Science', $this->stored[0]->getVenue());
+        $this->assertSame('10.5555/12345678', $this->stored[0]->getDoi());
+        $this->assertSame('Journal of Psychoceramics', $this->stored[0]->getVenue());
     }
 
     public function testTheOverridesSurviveTheNextSync(): void
@@ -84,13 +84,13 @@ final class SynchronizerTest extends TestCase
         $sync = $this->synchronizer();
         $scholar = $this->scholar();
         // First only HAL knew it (no DOI yet)...
-        $sync->merge($scholar, [new Work(title: 'Acid-sensitive photoswitches', type: WorkType::ARTICLE, year: 2024, identifiers: Identifiers::of(Identifier::of('hal', 'hal-04772417')), sources: ['hal'])]);
+        $sync->merge($scholar, [new Work(title: 'Acid-sensitive pot glazes', type: WorkType::ARTICLE, year: 2024, identifiers: Identifiers::of(Identifier::of('hal', 'hal-00000001')), sources: ['hal'])]);
         // ...then the published record, with its DOI and the same HAL id.
         $summary = $sync->merge($scholar, [Works::acid()]);
 
         $this->assertSame(1, $summary->updated);
         $this->assertCount(1, $this->stored);
-        $this->assertContains('doi:10.1039/d4sc04973j', $this->stored[0]->getMatchKeys());
+        $this->assertContains('doi:10.5555/12345678', $this->stored[0]->getMatchKeys());
     }
 
     public function testARejectedWorkStaysRejectedAndAManualOneIsTheSites(): void
@@ -99,7 +99,7 @@ final class SynchronizerTest extends TestCase
         $scholar = $this->scholar();
         $sync->merge($scholar, [Works::acid()]);
         $this->stored[0]->reject();
-        $manual = (new Publication($scholar))->setManual(true)->setTitle('Planting the Seeds of Algebra, PreK-2')->setType('book')->setYear(2016)->setVenue('Corwin')->approve();
+        $manual = (new Publication($scholar))->setManual(true)->setTitle('Growing Algebra, PreK-2')->setType('book')->setYear(2016)->setVenue('Exemple Press')->approve();
         $this->stored[] = $manual;
 
         $summary = $sync->merge($scholar, [Works::acid(), Works::seeds()]);
@@ -107,9 +107,9 @@ final class SynchronizerTest extends TestCase
         $this->assertSame(1, $summary->ignored);
         $this->assertSame(PublicationStatus::REJECTED, $this->stored[0]->getStatus());
         $this->assertCount(2, $this->stored, 'the book typed by hand is found by its title and year');
-        $this->assertSame('Corwin', $manual->getVenue());
+        $this->assertSame('Exemple Press', $manual->getVenue());
         $this->assertNull($manual->getWork(), 'a manual record keeps its own columns');
-        $this->assertContains('isbn:9781412996600', $manual->getMatchKeys());
+        $this->assertContains('isbn:9780000000019', $manual->getMatchKeys());
     }
 
     public function testAnAutoApprovingScholarsWorksGoOnlineAtOnce(): void
@@ -120,7 +120,7 @@ final class SynchronizerTest extends TestCase
         $this->assertTrue($this->stored[0]->isShown());
         $this->assertTrue($this->stored[0]->isBook());
         $this->assertCount(2, $this->stored[0]->getEditions());
-        $this->assertSame(['9781452279701', '9781412996600'], $this->stored[0]->getIsbns());
+        $this->assertSame(['9780000000002', '9780000000019'], $this->stored[0]->getIsbns());
         $this->assertSame('https://covers.openlibrary.org/b/id/1-L.jpg', $this->stored[0]->getCoverUrl());
     }
 }
