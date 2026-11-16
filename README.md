@@ -20,7 +20,7 @@ The bundle holds no talk and no service: a scholar's talks are
 composer require omnibase/scholar omnisense/omnischolar omnischolar/openalex omnischolar/hal omnischolar/crossref
 ```
 
-Stable releases follow semantic versioning: this installs the latest 1.x, with omnisense/omnibase 5.1 or later
+Stable releases follow semantic versioning: this installs the latest 2.x, with omnisense/omnibase 7.0 or later
 on Symfony (omnibridge/symfony) and Doctrine ORM (DoctrineBundle), omnibase/admin for the back office. No `minimum-stability` setting is needed.
 
 Under Symfony, register the bundles and the pages, then create the tables:
