@@ -6,24 +6,33 @@ use Base\Scholar\Entity\Publication;
 use Base\Scholar\Entity\Scholar;
 use Base\Scholar\Entity\Theme;
 use Base\Scholar\Enum\PublicationStatus;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\QueryBuilder;
-use Doctrine\Persistence\ManagerRegistry;
+use Base\Database\Repository\Finder\Criterion;
+use Base\Database\Repository\Finder\Group;
+use Base\Database\Repository\Finder\Parser;
+use Base\Database\Repository\Finders;
+use Base\Database\Repository\ServiceEntityRepository;
 
-/** @extends ServiceEntityRepository<Publication> */
+/**
+ * @method Publication|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Publication|null findOneBy(array $criteria, ?array $orderBy = null)
+ * @method Publication[]    findAll()
+ * @method Publication[]    findBy(array $criteria, ?array $orderBy = null, $limit = null, $offset = null)
+ */
 class PublicationRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(Finders $finders)
     {
-        parent::__construct($registry, Publication::class);
+        parent::__construct($finders, Publication::class);
     }
 
-    /** What the site shows: validated, not hidden. */
-    public function shown(): QueryBuilder
+    /**
+     * What the site shows: validated, not hidden - the criteria of the finder language.
+     *
+     * @return array<int|string, mixed>
+     */
+    public function shown(): array
     {
-        return $this->createQueryBuilder('p')
-            ->andWhere('p.status = :published')->setParameter('published', PublicationStatus::PUBLISHED->value)
-            ->andWhere('p.hidden = false');
+        return ['status' => PublicationStatus::PUBLISHED->value, 'hidden' => false];
     }
 
     /**
@@ -36,73 +45,89 @@ class PublicationRepository extends ServiceEntityRepository
      */
     public function findShown(array $types = [], ?int $year = null, ?Theme $theme = null, ?string $text = null, ?int $limit = null, int $offset = 0, array $excludeTypes = []): array
     {
-        $qb = $this->filtered($types, $year, $theme, $text, $excludeTypes)
-            ->orderBy('p.pinned', 'DESC')->addOrderBy('p.year', 'DESC')->addOrderBy('p.id', 'DESC')
-            ->setFirstResult($offset);
-        if ($limit) {
-            $qb->setMaxResults($limit);
-        }
-
-        return $qb->getQuery()->getResult();
+        return $this->findBy($this->filtered($types, $year, $theme, $text, $excludeTypes), ['pinned' => 'DESC', 'year' => 'DESC', 'id' => 'DESC'], $limit ?: null, $offset);
     }
 
     /** @param list<string> $types */
     public function countShown(array $types = [], ?int $year = null, ?Theme $theme = null, ?string $text = null, array $excludeTypes = []): int
     {
-        return (int) $this->filtered($types, $year, $theme, $text, $excludeTypes)->select('COUNT(p.id)')->getQuery()->getSingleScalarResult();
+        return $this->count($this->filtered($types, $year, $theme, $text, $excludeTypes));
     }
 
-    /** @param list<string> $types */
-    private function filtered(array $types, ?int $year, ?Theme $theme, ?string $text, array $excludeTypes = []): QueryBuilder
+    /**
+     * @param list<string> $types
+     *
+     * @return array<int|string, mixed>
+     */
+    private function filtered(array $types, ?int $year, ?Theme $theme, ?string $text, array $excludeTypes = []): array
     {
-        $qb = $this->shown();
+        $criteria = $this->shown();
         if ($types) {
-            $qb->andWhere('p.type IN (:types)')->setParameter('types', $types);
+            $criteria['type'] = $types;
         }
         if ($excludeTypes) {
-            $qb->andWhere('p.type NOT IN (:excluded)')->setParameter('excluded', $excludeTypes);
+            $criteria[] = Group::of(Parser::SEPARATOR_AND, Criterion::of('type', $excludeTypes, Parser::OPTION_NOT_EQUAL));
         }
         if ($year) {
-            $qb->andWhere('p.year = :year')->setParameter('year', $year);
+            $criteria['year'] = $year;
         }
         if ($theme) {
-            $qb->andWhere(':theme MEMBER OF p.themes')->setParameter('theme', $theme);
+            // :theme MEMBER OF p.themes: a join of the themes, on that one.
+            $criteria['themes'] = $theme;
         }
-        foreach (array_slice(preg_split('/\s+/u', trim((string) $text)) ?: [], 0, 6) as $i => $word) {
+        foreach (array_slice(preg_split('/\s+/u', trim((string) $text)) ?: [], 0, 6) as $word) {
             if ('' !== $word) {
-                $qb->andWhere("(p.title LIKE :w$i OR p.authors LIKE :w$i OR p.venue LIKE :w$i)")->setParameter("w$i", '%'.addcslashes($word, '%_').'%');
+                $like = '%'.addcslashes($word, '%_').'%';
+                $criteria[] = Group::of(Parser::SEPARATOR_OR,
+                    Criterion::of('title', $like, Parser::OPTION_PARTIAL),
+                    Criterion::of('authors', $like, Parser::OPTION_PARTIAL),
+                    Criterion::of('venue', $like, Parser::OPTION_PARTIAL),
+                );
             }
         }
 
-        return $qb;
+        return $criteria;
     }
 
     /** @return list<Publication> the selection: the ones marked, else the pinned, else the latest */
     public function findSelected(int $limit = 5): array
     {
-        $selected = $this->shown()->andWhere('p.selected = true')
-            ->orderBy('p.year', 'DESC')->addOrderBy('p.id', 'DESC')->setMaxResults($limit)->getQuery()->getResult();
+        $selected = $this->findBy([...$this->shown(), 'selected' => true], ['year' => 'DESC', 'id' => 'DESC'], $limit);
 
         return $selected ?: $this->findShown(limit: $limit);
     }
 
     public function findOneShown(int $id): ?Publication
     {
-        return $this->shown()->andWhere('p.id = :id')->setParameter('id', $id)->getQuery()->getOneOrNullResult();
+        return $this->findOneBy([...$this->shown(), 'id' => $id]);
     }
 
-    /** @return list<int> the years that have a publication, newest first */
+    /**
+     * The years that have a publication, newest first: read from the publications shown (the language selects
+     * entities, no DISTINCT column).
+     *
+     * @return list<int>
+     */
     public function findYears(): array
     {
-        return array_map('intval', array_column($this->shown()->select('DISTINCT p.year AS year')->andWhere('p.year IS NOT NULL')->orderBy('p.year', 'DESC')->getQuery()->getScalarResult(), 'year'));
+        $years = [];
+        foreach ($this->findBy([...$this->shown(), Group::of(Parser::SEPARATOR_AND, Criterion::of('year', null, Parser::OPTION_NOT_NULL))], ['year' => 'DESC']) as $publication) {
+            $years[(int) $publication->getYear()] = true;
+        }
+
+        return array_keys($years);
     }
 
-    /** @return array<string, int> type => count */
+    /**
+     * type => count, the most first: counted from the publications shown (the language has no GROUP BY).
+     *
+     * @return array<string, int>
+     */
     public function countByType(): array
     {
         $counts = [];
-        foreach ($this->shown()->select('p.type AS type, COUNT(p.id) AS n')->groupBy('p.type')->getQuery()->getScalarResult() as $row) {
-            $counts[$row['type']] = (int) $row['n'];
+        foreach ($this->findBy($this->shown()) as $publication) {
+            $counts[$publication->getType()] = ($counts[$publication->getType()] ?? 0) + 1;
         }
         arsort($counts);
 

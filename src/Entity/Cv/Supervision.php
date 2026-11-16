@@ -3,7 +3,7 @@
 namespace Base\Scholar\Entity\Cv;
 
 use Base\Scholar\Enum\SupervisionLevel;
-use Doctrine\ORM\Mapping as ORM;
+use Base\Mapping as ORM;
 
 /**
  * A supervision: who (`title` holds the student's name), at what level (PhD, master, post-doc),

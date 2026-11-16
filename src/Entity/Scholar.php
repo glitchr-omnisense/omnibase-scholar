@@ -4,7 +4,7 @@ namespace Base\Scholar\Entity;
 
 use Base\Database\Attribute\Uploader;
 use Base\Scholar\Repository\ScholarRepository;
-use Doctrine\ORM\Mapping as ORM;
+use Base\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 

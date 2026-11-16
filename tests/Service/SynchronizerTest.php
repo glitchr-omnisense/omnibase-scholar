@@ -8,7 +8,8 @@ use Base\Scholar\Enum\PublicationStatus;
 use Base\Scholar\Repository\PublicationRepository;
 use Base\Scholar\Service\Synchronizer;
 use Base\Scholar\Tests\Fixtures\Works;
-use Doctrine\ORM\EntityManagerInterface;
+use Base\Database\Repository\Repositories;
+use Base\Contract\UnitOfWork;
 use Omnischolar\Model\Identifier;
 use Omnischolar\Model\Identifiers;
 use Omnischolar\Model\Work;
@@ -26,12 +27,12 @@ final class SynchronizerTest extends TestCase
 
     private function synchronizer(): Synchronizer
     {
-        $em = $this->createStub(EntityManagerInterface::class);
+        $em = $this->createStub(UnitOfWork::class);
         $em->method('persist')->willReturnCallback(function (object $o) { if ($o instanceof Publication) { $this->stored[] = $o; } });
         $repository = $this->createStub(PublicationRepository::class);
         $repository->method('findAllOf')->willReturnCallback(fn () => $this->stored);
 
-        return new Synchronizer($em, $repository);
+        return new Synchronizer($em, $repository, $this->createStub(Repositories::class));
     }
 
     private function scholar(): Scholar

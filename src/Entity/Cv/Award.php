@@ -2,7 +2,7 @@
 
 namespace Base\Scholar\Entity\Cv;
 
-use Doctrine\ORM\Mapping as ORM;
+use Base\Mapping as ORM;
 
 /**
  * A distinction: a prize, a medal, a fellowship, an honorary title - given by whom

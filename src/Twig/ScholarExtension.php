@@ -76,7 +76,7 @@ final class ScholarExtension extends AbstractExtension
     {
         try {
             return $read();
-        } catch (\Doctrine\DBAL\Exception $e) {
+        } catch (\Base\Database\Exception\TableNotFound|\Doctrine\DBAL\Exception $e) {
             return $default;
         }
     }

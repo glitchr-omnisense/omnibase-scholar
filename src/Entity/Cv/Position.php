@@ -2,7 +2,7 @@
 
 namespace Base\Scholar\Entity\Cv;
 
-use Doctrine\ORM\Mapping as ORM;
+use Base\Mapping as ORM;
 
 /**
  * A position held: "Professeur des universités" at "Brown University", since 2015 - the title,

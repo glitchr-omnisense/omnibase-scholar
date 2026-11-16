@@ -2,7 +2,7 @@
 
 namespace Base\Scholar\Entity\Cv;
 
-use Doctrine\ORM\Mapping as ORM;
+use Base\Mapping as ORM;
 
 /**
  * A course taught: its title, where (`organization`), the level ("L3", "Master 2", "teacher

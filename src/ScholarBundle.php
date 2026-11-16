@@ -3,7 +3,7 @@
 namespace Base\Scholar;
 
 use Base\Traits\SingletonTrait;
-use Omnibridge\Symfony\Omnibase\Bundle\AbstractBaseBundle;
+use Base\Bundle\AbstractBaseBundle;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 /**

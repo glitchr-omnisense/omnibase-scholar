@@ -133,7 +133,7 @@ class PublicationCrudController extends AbstractCrudController
         /** @var Publication $publication */
         $publication = $this->findEntity($entityId);
         $approve ? $publication->approve() : $publication->reject();
-        $this->entityManager->flush();
+        $this->unitOfWork->flush();
         $this->addFlash('success', $this->translator->trans($approve ? 'admin.publication.flash.approved' : 'admin.publication.flash.rejected', ['title' => mb_strimwidth((string) $publication->getTitle(), 0, 80, '…')], 'scholar'));
 
         // Back where the button was: the dashboard's widget, or the list.

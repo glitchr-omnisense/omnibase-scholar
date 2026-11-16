@@ -11,7 +11,8 @@ use Base\Scholar\Entity\Scholar;
 use Base\Scholar\Enum\PublicationStatus;
 use Base\Scholar\Model\SyncSummary;
 use Base\Scholar\Repository\PublicationRepository;
-use Doctrine\ORM\EntityManagerInterface;
+use Base\Database\Repository\Repositories;
+use Base\Contract\UnitOfWork;
 use Omnischolar\Collector;
 use Omnischolar\Model\Affiliation;
 use Omnischolar\Model\Work;
@@ -34,8 +35,9 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 class Synchronizer
 {
     public function __construct(
-        private readonly EntityManagerInterface $entityManager,
+        private readonly UnitOfWork $unitOfWork,
         private readonly PublicationRepository $publications,
+        private readonly Repositories $repositories,
         private readonly ?Registry $registry = null,
         private readonly ?Collector $collector = null,
         #[Autowire('%scholar.max_per_source%')] private readonly int $max = 2000,
@@ -57,7 +59,7 @@ class Synchronizer
         if (!$this->isAvailable()) {
             $summary->errors[] = 'glitchr/omnischolar is not installed (Omnischolar\Bridge\Symfony\OmnischolarBundle).';
             $scholar->rememberSync($summary->toArray(), $at);
-            $this->entityManager->flush();
+            $this->unitOfWork->flush();
 
             return $summary;
         }
@@ -86,7 +88,7 @@ class Synchronizer
         $this->curriculum($scholar, $summary);
 
         $scholar->rememberSync($summary->toArray(), $at);
-        $this->entityManager->flush();
+        $this->unitOfWork->flush();
 
         return $summary;
     }
@@ -112,7 +114,7 @@ class Synchronizer
                 if ($scholar->isAutoApprove()) {
                     $publication->approve();
                 }
-                $this->entityManager->persist($publication);
+                $this->unitOfWork->persist($publication);
                 $index->add($publication);
                 ++$summary->created;
                 continue;
@@ -190,12 +192,12 @@ class Synchronizer
                 continue;
             }
             $key = substr(sha1(implode('|', [$affiliation->kind, $affiliation->organization, $affiliation->role, $affiliation->start])), 0, 40);
-            $entry = null !== $scholar->getId() ? $this->entityManager->getRepository($class)->findOneBy(['scholar' => $scholar, 'origin' => $source, 'externalKey' => $key]) : null;
+            $entry = null !== $scholar->getId() ? $this->repositories->of($class)->findOneBy(['scholar' => $scholar, 'origin' => $source, 'externalKey' => $key]) : null;
             if (!$entry) {
                 /** @var CvEntry $entry */
                 $entry = new $class($scholar);
                 $entry->setOrigin($source)->setExternalKey($key)->setVisible(false);
-                $this->entityManager->persist($entry);
+                $this->unitOfWork->persist($entry);
                 ++$summary->cv;
             }
             $entry->setTitle($affiliation->role ?: $affiliation->organization)

@@ -9,7 +9,7 @@ use Base\Scholar\Entity\Cv\Degree;
 use Base\Scholar\Entity\Cv\Grant;
 use Base\Scholar\Entity\Cv\Position;
 use Base\Scholar\Entity\Cv\Supervision;
-use Doctrine\ORM\EntityManagerInterface;
+use Base\Database\Repository\Repositories;
 
 /**
  * The CV's sections, each line checked (visible) and in order: the
@@ -28,7 +28,7 @@ final class Curriculum
         'supervisions' => Supervision::class,
     ];
 
-    public function __construct(private readonly EntityManagerInterface $entityManager)
+    public function __construct(private readonly Repositories $repositories)
     {
     }
 
@@ -60,7 +60,7 @@ final class Curriculum
     public function entries(string $class): array
     {
         try {
-            $entries = $this->entityManager->getRepository($class)->findBy(['visible' => true]);
+            $entries = $this->repositories->of($class)->findBy(['visible' => true]);
         } catch (\Throwable) {
             return []; // its table not migrated yet
         }
@@ -76,7 +76,7 @@ final class Curriculum
         $count = 0;
         foreach (self::SECTIONS as $class) {
             try {
-                $count += $this->entityManager->getRepository($class)->count(['visible' => false]);
+                $count += $this->repositories->of($class)->count(['visible' => false]);
             } catch (\Throwable) {
             }
         }

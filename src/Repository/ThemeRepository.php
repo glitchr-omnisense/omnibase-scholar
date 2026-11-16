@@ -4,15 +4,20 @@ namespace Base\Scholar\Repository;
 
 use Base\Scholar\Entity\Theme;
 use Base\Scholar\Enum\ThemeKind;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
+use Base\Database\Repository\Finders;
+use Base\Database\Repository\ServiceEntityRepository;
 
-/** @extends ServiceEntityRepository<Theme> */
+/**
+ * @method Theme|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Theme|null findOneBy(array $criteria, ?array $orderBy = null)
+ * @method Theme[]    findAll()
+ * @method Theme[]    findBy(array $criteria, ?array $orderBy = null, $limit = null, $offset = null)
+ */
 class ThemeRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
+    public function __construct(Finders $finders)
     {
-        parent::__construct($registry, Theme::class);
+        parent::__construct($finders, Theme::class);
     }
 
     /** @return list<Theme> the visible ones, in their order; of one kind when asked */

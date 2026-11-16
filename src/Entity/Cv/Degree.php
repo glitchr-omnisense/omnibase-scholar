@@ -2,7 +2,7 @@
 
 namespace Base\Scholar\Entity\Cv;
 
-use Doctrine\ORM\Mapping as ORM;
+use Base\Mapping as ORM;
 
 /**
  * A degree: its title ("PhD in Chemistry", "Habilitation"), where and when (`end`, or `start`

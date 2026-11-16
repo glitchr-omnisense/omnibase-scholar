@@ -2,7 +2,7 @@
 
 namespace Base\Scholar\Entity\Cv;
 
-use Doctrine\ORM\Mapping as ORM;
+use Base\Mapping as ORM;
 
 /**
  * A grant or a funded project: its title, the funder (`organization`), its reference, the

@@ -8,7 +8,7 @@ use Base\Scholar\Entity\Theme;
 use Base\Scholar\Enum\PublicationStatus;
 use Base\Scholar\Enum\SupervisionLevel;
 use Base\Scholar\Enum\ThemeKind;
-use Doctrine\ORM\Mapping as ORM;
+use Base\Mapping as ORM;
 use PHPUnit\Framework\TestCase;
 use Symfony\Contracts\Translation\TranslatableInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
